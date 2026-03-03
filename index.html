@@ -1,1 +1,538 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Holi 🎨 - Aayu Ki Taraf Se!</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800&family=Kalam:wght@400;700&display=swap');
 
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #0a0014;
+  font-family: 'Baloo 2', cursive;
+  overflow-x: hidden;
+  min-height: 100vh;
+  user-select: none;
+}
+
+/* ── BLOBS ── */
+.blob { position:fixed; border-radius:50%; filter:blur(90px); opacity:.18; pointer-events:none; will-change:transform; animation:blobMove 12s ease-in-out infinite; }
+.b1{width:400px;height:400px;background:#FF2D78;top:-80px;left:-80px;animation-duration:14s;}
+.b2{width:340px;height:340px;background:#FFD600;top:40%;right:-60px;animation-duration:11s;animation-delay:-4s;}
+.b3{width:280px;height:280px;background:#00E676;bottom:5%;left:15%;animation-duration:13s;animation-delay:-7s;}
+.b4{width:240px;height:240px;background:#D500F9;bottom:-40px;right:15%;animation-duration:10s;animation-delay:-2s;}
+@keyframes blobMove{0%,100%{transform:translate(0,0)}33%{transform:translate(20px,-30px)}66%{transform:translate(-15px,20px)}}
+
+/* ── EMOJI RAIN ── */
+.particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1;}
+.p{position:absolute;animation:fall linear infinite;will-change:transform;}
+@keyframes fall{0%{transform:translateY(-60px) rotate(0deg);opacity:.75}100%{transform:translateY(110vh) rotate(360deg);opacity:0}}
+
+/* ── GULAL CANVAS ── */
+#gulal{position:fixed;inset:0;pointer-events:none;z-index:2;}
+
+/* ── MAIN SCREEN ── */
+.wrap{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+
+/* ── TITLE ── */
+.holi-title{
+  font-size:clamp(52px,11vw,120px);font-weight:800;line-height:1;
+  background:linear-gradient(135deg,#FF2D78,#FFD600,#00E676,#2979FF,#D500F9,#FF6D00);
+  background-size:300% 300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:shift 4s ease infinite, bob 5s ease-in-out infinite;
+  text-align:center;
+}
+@keyframes shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+
+.by-line{font-family:'Kalam',cursive;font-size:clamp(15px,3vw,22px);color:rgba(255,255,255,.55);margin-top:6px;text-align:center;letter-spacing:1px;}
+
+/* ── TYPEWRITER BOX ── */
+.typer-wrap{
+  margin:36px auto 0;
+  max-width:680px;width:90%;
+  min-height:90px;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+}
+.typer-text{
+  font-family:'Kalam',cursive;
+  font-size:clamp(20px,4vw,32px);
+  font-weight:700;
+  line-height:1.5;
+  text-shadow:0 0 20px currentColor;
+  transition:color .3s;
+}
+.typer-text .cursor-blink{
+  display:inline-block;
+  width:3px;height:1.1em;
+  background:currentColor;
+  margin-left:4px;
+  vertical-align:middle;
+  animation:blink .7s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ── FLOATING BUTTONS ── */
+.float-btns{
+  position:fixed;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:14px;
+  z-index:100;
+}
+.fbtn{
+  width:58px;height:58px;
+  border-radius:50%;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;
+  box-shadow:0 6px 20px rgba(0,0,0,.4);
+  transition:transform .2s,box-shadow .2s;
+  position:relative;
+}
+.fbtn:hover{transform:scale(1.15);}
+.fbtn:active{transform:scale(.92);}
+.fbtn-about{background:linear-gradient(135deg,#FF2D78,#FF6D00);animation:fglow1 2.5s ease-in-out infinite;}
+.fbtn-form {background:linear-gradient(135deg,#D500F9,#2979FF);animation:fglow2 2.5s ease-in-out infinite .5s;}
+@keyframes fglow1{0%,100%{box-shadow:0 6px 20px rgba(255,45,120,.5)}50%{box-shadow:0 6px 30px rgba(255,45,120,.9),0 0 20px rgba(255,109,0,.6)}}
+@keyframes fglow2{0%,100%{box-shadow:0 6px 20px rgba(213,0,249,.5)}50%{box-shadow:0 6px 30px rgba(213,0,249,.9),0 0 20px rgba(41,121,255,.6)}}
+
+/* Tooltip */
+.fbtn .tip{
+  position:absolute;right:68px;
+  background:rgba(0,0,0,.85);color:#fff;
+  padding:6px 12px;border-radius:10px;
+  font-family:'Baloo 2',cursive;font-size:13px;font-weight:700;
+  white-space:nowrap;pointer-events:none;
+  opacity:0;transition:opacity .2s;
+  border:1px solid rgba(255,255,255,.15);
+}
+.fbtn:hover .tip{opacity:1;}
+
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);z-index:500;justify-content:center;align-items:center;padding:16px;}
+.overlay.on{display:flex;}
+.mbox{
+  background:linear-gradient(135deg,#1a0030,#000d24);
+  border:1.5px solid rgba(255,214,0,.25);border-radius:28px;padding:36px;
+  max-width:520px;width:100%;position:relative;
+  box-shadow:0 0 50px rgba(255,45,120,.25);
+  animation:pop .35s cubic-bezier(.175,.885,.32,1.275);
+  max-height:90vh;overflow-y:auto;
+}
+@keyframes pop{from{transform:scale(.5) rotate(-8deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.mclose{position:absolute;top:14px;right:18px;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;opacity:.6;transition:opacity .2s,transform .2s;}
+.mclose:hover{opacity:1;transform:rotate(90deg) scale(1.2);}
+
+/* ABOUT */
+.avatar{width:88px;height:88px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(135deg,#FF2D78,#FFD600,#00E676);display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 0 25px rgba(255,45,120,.5);animation:ava 4s ease-in-out infinite;}
+@keyframes ava{0%,100%{transform:rotate(-4deg) scale(1)}50%{transform:rotate(4deg) scale(1.06)}}
+.aname{font-size:32px;font-weight:800;text-align:center;background:linear-gradient(135deg,#FFD600,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
+.atag{text-align:center;font-family:'Kalam',cursive;color:#00E5FF;font-size:15px;margin-bottom:20px;}
+.facts{display:grid;gap:10px;}
+.fc{background:rgba(255,255,255,.05);border-left:4px solid #FFD600;padding:11px 16px;border-radius:12px;display:flex;align-items:center;gap:10px;transition:transform .18s;}
+.fc:hover{transform:translateX(7px)}
+.fc:nth-child(2){border-left-color:#FF2D78}.fc:nth-child(3){border-left-color:#00E676}.fc:nth-child(4){border-left-color:#00E5FF}.fc:nth-child(5){border-left-color:#D500F9}
+.fc .ic{font-size:20px}.fc .tx{color:#fff;font-family:'Kalam',cursive;font-size:14px;}
+.wa-btn{display:block;margin:18px auto 0;padding:11px 28px;background:#25D366;border:none;border-radius:25px;color:#fff;font-family:'Baloo 2',cursive;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .18s;box-shadow:0 6px 20px rgba(37,211,102,.4);width:fit-content;}
+.wa-btn:hover{transform:scale(1.07)}
+
+/* FORM */
+.ftitle{font-size:26px;font-weight:800;text-align:center;margin-bottom:4px;background:linear-gradient(135deg,#D500F9,#2979FF,#00E5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.fsub{text-align:center;font-family:'Kalam',cursive;color:rgba(255,255,255,.55);font-size:14px;margin-bottom:20px;}
+.fg{margin-bottom:15px;}
+.fl{display:block;color:#FFD600;font-family:'Kalam',cursive;font-size:15px;margin-bottom:6px;font-weight:700;}
+.fs{width:100%;padding:13px 16px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);border-radius:14px;color:#fff;font-family:'Baloo 2',cursive;font-size:14px;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath fill='%23FFD600' d='M5 7L0 0h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;transition:border-color .2s;}
+.fs:focus{outline:none;border-color:#D500F9}.fs option{background:#1a0030}
+.fsub-btn{width:100%;padding:15px;background:linear-gradient(135deg,#FF2D78,#D500F9);border:none;border-radius:50px;color:#fff;font-family:'Baloo 2',cursive;font-size:17px;font-weight:800;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;margin-top:8px;box-shadow:0 8px 25px rgba(255,45,120,.4);transition:transform .18s,box-shadow .18s;}
+.fsub-btn:hover{transform:scale(1.04);box-shadow:0 12px 35px rgba(255,45,120,.6)}.fsub-btn:active{transform:scale(.97)}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(120px);background:linear-gradient(135deg,#00E676,#2979FF);color:#fff;padding:16px 28px;border-radius:24px;font-family:'Baloo 2',cursive;font-size:17px;font-weight:700;z-index:9999;transition:transform .45s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 8px 30px rgba(0,230,118,.4);white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ADMIN */
+#admin{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9000;padding:20px;overflow-y:auto;}
+#admin.on{display:block}
+.adh{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;border-bottom:1.5px solid rgba(255,214,0,.25);padding-bottom:14px;}
+.adt{font-size:22px;font-weight:800;color:#FFD600;}
+.adcl{background:rgba(255,45,120,.2);border:1px solid #FF2D78;color:#fff;padding:7px 16px;border-radius:18px;cursor:pointer;font-family:'Baloo 2',cursive;font-size:13px;transition:background .2s;}
+.adcl:hover{background:rgba(255,45,120,.5)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:22px;}
+.sc{background:rgba(255,255,255,.05);border:1px solid rgba(255,214,0,.18);border-radius:18px;padding:18px;text-align:center;}
+.sn{font-size:32px;font-weight:800;color:#FFD600;}.sl{color:rgba(255,255,255,.55);font-size:12px;margin-top:4px;}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px;}
+th{color:#FFD600;font-size:12px;text-transform:uppercase;letter-spacing:1px;}
+td{color:rgba(255,255,255,.82)}
+.nd{text-align:center;color:rgba(255,255,255,.3);padding:36px;font-family:'Kalam',cursive;font-size:18px;}
+.wa-exp{background:linear-gradient(135deg,#25D366,#128C7E);border:none;color:#fff;padding:12px 24px;border-radius:22px;font-family:'Baloo 2',cursive;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;box-shadow:0 6px 20px rgba(37,211,102,.35);transition:transform .18s;}
+.wa-exp:hover{transform:scale(1.05)}
+
+footer{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.2);font-family:'Kalam',cursive;font-size:12px;z-index:10;cursor:default;white-space:nowrap;}
+</style>
+</head>
+<body>
+
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+<div class="blob b4"></div>
+
+<div class="particles" id="particles"></div>
+<canvas id="gulal"></canvas>
+
+<!-- MAIN -->
+<div class="wrap">
+  <div class="holi-title">HAPPY HOLI! 🎨</div>
+  <div class="by-line">— Aayu Ki Taraf Se —</div>
+
+  <div class="typer-wrap">
+    <div class="typer-text" id="typer">
+      <span id="typer-content"></span><span class="cursor-blink" id="typer-cursor"></span>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING BUTTONS -->
+<div class="float-btns">
+  <button class="fbtn fbtn-about" onclick="openModal('about',event)">
+    🙋
+    <span class="tip">Kaun Hoon Main?</span>
+  </button>
+  <button class="fbtn fbtn-form" onclick="openModal('form',event)">
+    📝
+    <span class="tip">Holi Form Bharo!</span>
+  </button>
+</div>
+
+<footer id="footer">Made with 💖 Aayu • Holi 2025 ✨</footer>
+
+<!-- ABOUT MODAL -->
+<div class="overlay" id="about">
+  <div class="mbox">
+    <button class="mclose" onclick="closeModal('about')">✕</button>
+    <div class="avatar">🤪</div>
+    <div class="aname">Aayu 🌈</div>
+    <div class="atag">~ Pagal • Loyal • Holi Ka Deewana ~</div>
+    <div class="facts">
+      <div class="fc"><span class="ic">🎂</span><span class="tx">Naam: Aayu — aur naam hi kaafi hai! 😎</span></div>
+      <div class="fc"><span class="ic">🎨</span><span class="tx">Holi ka sabse bada deewana — gulal udana meri life hai!</span></div>
+      <div class="fc"><span class="ic">❤️</span><span class="tx">Dosto ke liye kuch bhi — party ho ya problem!</span></div>
+      <div class="fc"><span class="ic">🌟</span><span class="tx">Life mantra: "Rang lo, rang do — aur masti karo!" 🎉</span></div>
+      <div class="fc"><span class="ic">💬</span><span class="tx">WhatsApp pe hamesha available — aao baat karte hain! 😄</span></div>
+    </div>
+    <a href="https://wa.me/917520947031" class="wa-btn" target="_blank">💬 WhatsApp Aayu Ko</a>
+  </div>
+</div>
+
+<!-- FORM MODAL -->
+<div class="overlay" id="form">
+  <div class="mbox">
+    <button class="mclose" onclick="closeModal('form')">✕</button>
+    <div class="ftitle">🎊 Aayu Ka Holi Form 🎊</div>
+    <div class="fsub">Kuch type nahi karna — bas select karo! 😂</div>
+    <div class="fg">
+      <label class="fl">😄 Tumhara Naam?</label>
+      <select class="fs" id="f_naam">
+        <option value="">-- Dhundhao Apna Naam --</option>
+        <option>Rahul 😎</option><option>Priya 🌸</option><option>Aman 🤝</option>
+        <option>Neha 💁‍♀️</option><option>Vikram 💪</option><option>Kavya 🥰</option>
+        <option>Rohit 🕺</option><option>Anjali 🌺</option><option>Sachin ⚡</option>
+        <option>Pooja 🦋</option><option>Yaar, mera naam list mein nahi 😤</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">💞 Aayu Se Tumhara Kya Rishta Hai?</label>
+      <select class="fs" id="f_relation">
+        <option value="">-- Sachcha Rishta Batao --</option>
+        <option>🤝 Best Friend — Jaan se pyaara!</option>
+        <option>😂 Dost — Aam wala, lekin khaas!</option>
+        <option>👊 Bhai/Behen — Khoon ka rishta!</option>
+        <option>🫣 Crush — Poochho mat, samjho!</option>
+        <option>😍 Bahut khaas — naam nahi bataunga!</option>
+        <option>👀 Stalker type — bas dekhta hoon!</option>
+        <option>🙃 Enemy — phir bhi Holi mubarak!</option>
+        <option>🤷 Pata nahi, complicated hai</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">💌 Is Holi Pe Mood Kaisa Hai?</label>
+      <select class="fs" id="f_mood">
+        <option value="">-- Asli Mood Batao --</option>
+        <option>🥳 Full On Holi Mood — LETS GOOO!</option>
+        <option>😴 Aaram Farmish — Holi-day literally</option>
+        <option>🤩 Aayu ke saath milna hai!</option>
+        <option>💖 Pyaar Bhara — dil full of colours</option>
+        <option>😂 Masti Mode — kuch bhi ho sakta hai!</option>
+        <option>🍺 Thandai Mode — bas wahi chahiye</option>
+        <option>🫠 Hangover Hai — pichli raat zyaada ho gayi</option>
+        <option>🎭 Drama Queen/King Mode activated!</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">🌈 Aayu Ko Kya Kehna Chahoge?</label>
+      <select class="fs" id="f_msg">
+        <option value="">-- Message Chunao --</option>
+        <option>🌸 "Happy Holi Aayu! Bahut saara pyaar!"</option>
+        <option>🤝 "Yaar, tere bina Holi adhoori hai!"</option>
+        <option>😂 "Aayu, tera gulal mujh pe nahi chalega!"</option>
+        <option>💖 "Tere jaise dost milna naseeb ki baat hai!"</option>
+        <option>🙏 "Hamesha khush raho, rang barse tere jeevan mein!"</option>
+        <option>🎊 "Tu best hai yaar — no debate!"</option>
+        <option>🫣 "Kuch kehna tha... par Holi wala mood nahi 😅"</option>
+      </select>
+    </div>
+    <button class="fsub-btn" onclick="submitForm()">🚀 WhatsApp Pe Bhejo! 💬</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin">
+  <div class="adh">
+    <div class="adt">🔐 Admin Panel — Holi Responses</div>
+    <button class="adcl" onclick="document.getElementById('admin').classList.remove('on')">✕ Close</button>
+  </div>
+  <div class="stats">
+    <div class="sc"><div class="sn" id="totN">0</div><div class="sl">Total Responses</div></div>
+    <div class="sc"><div class="sn" id="todN">0</div><div class="sl">Aaj Ke</div></div>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>#</th><th>Naam</th><th>Relation</th><th>Mood</th><th>Message</th><th>Time</th></tr></thead>
+      <tbody id="atbody"><tr><td colspan="6" class="nd">🎨 Abhi koi response nahi...</td></tr></tbody>
+    </table>
+  </div>
+  <button class="wa-exp" onclick="exportWA()">💬 WhatsApp Pe Saari Data Bhejo</button>
+</div>
+
+<div class="toast" id="toast">🎉 Holi Mubarak! WhatsApp khul raha hai... 🌈</div>
+
+<script>
+const WA = '917520947031';
+const SECRET = 'holi2025admin';
+
+// ── EMOJI RAIN ──
+const emojis = ['🎨','🌈','💥','🌸','🎊','🎉','🌺','✨','💸','🎈'];
+const pc = document.getElementById('particles');
+for (let i = 0; i < 20; i++) {
+  const el = document.createElement('div');
+  el.className = 'p';
+  el.textContent = emojis[i % emojis.length];
+  el.style.left = (Math.random()*100) + 'vw';
+  el.style.fontSize = (14 + Math.random()*16) + 'px';
+  el.style.animationDuration = (7 + Math.random()*9) + 's';
+  el.style.animationDelay   = -(Math.random()*14) + 's';
+  pc.appendChild(el);
+}
+
+// ── TYPEWRITER ──
+const lines = [
+  { text: "Happy Holi! 🎨 Rang barse aapke jeevan mein!",     color: "#FF2D78" },
+  { text: "Aayu ki taraf se dil bhar ke shubhkamnayein! 💖",   color: "#FFD600" },
+  { text: "Are ham bihari logo ki holi kuchh danger hai 🥳",           color: "#00E676" },
+  { text: "AAP SABKO AAPKE WEB DEVELOPER DOST AAYU KI TARAF SE HAPPY HOLI🌈",         color: "#00E5FF" },
+  { text: "Dosti ka rang sabse gehra hota hai! 🤝",             color: "#D500F9" },
+  { text: "Aap sabko Holi ki dheron shubhkamnayein! 🌺",        color: "#FF6D00" },
+  { text: "Khushiyan barse, rang barse — Holi Hai! 🎊",         color: "#2979FF" },
+  { text: "Aayu yaad karega — yeh Holi, yeh pyaar! ❤️",         color: "#FF2D78" },
+];
+
+let lineIdx = 0, charIdx = 0, deleting = false, pauseTimer = null;
+const contentEl = document.getElementById('typer-content');
+const typerEl   = document.getElementById('typer');
+
+function typeTick() {
+  const line = lines[lineIdx];
+  typerEl.style.color = line.color;
+  typerEl.style.textShadow = `0 0 25px ${line.color}88`;
+
+  if (!deleting) {
+    charIdx++;
+    contentEl.textContent = line.text.slice(0, charIdx);
+    if (charIdx === line.text.length) {
+      // Pause then delete
+      pauseTimer = setTimeout(() => { deleting = true; typeLoop(); }, 2000);
+      return;
+    }
+  } else {
+    charIdx--;
+    contentEl.textContent = line.text.slice(0, charIdx);
+    if (charIdx === 0) {
+      deleting = false;
+      lineIdx = (lineIdx + 1) % lines.length;
+      setTimeout(typeLoop, 300);
+      return;
+    }
+  }
+  typeLoop();
+}
+
+function typeLoop() {
+  const speed = deleting ? 28 : 55;
+  setTimeout(typeTick, speed);
+}
+typeLoop();
+
+// ── GULAL CANVAS ──
+const gc  = document.getElementById('gulal');
+const ctx = gc.getContext('2d');
+const resize = () => { gc.width = window.innerWidth; gc.height = window.innerHeight; };
+resize();
+window.addEventListener('resize', resize);
+
+const holiColors = ['#FF2D78','#FFD600','#00E676','#2979FF','#D500F9','#FF6D00','#00E5FF','#FF69B4'];
+const particles  = [];
+
+function spawnGulal(x, y) {
+  // Dot particles
+  for (let i = 0; i < 40; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 2 + Math.random() * 9;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - Math.random() * 4,
+      color: holiColors[Math.floor(Math.random() * holiColors.length)],
+      size: 3 + Math.random() * 8,
+      life: 1,
+      decay: 0.018 + Math.random() * 0.02,
+      gravity: 0.22,
+      type: Math.random() > 0.5 ? 'circle' : 'rect',
+      rot: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.15
+    });
+  }
+  // Puff clouds
+  for (let i = 0; i < 4; i++) {
+    particles.push({
+      x, y,
+      vx: (Math.random() - 0.5) * 3,
+      vy: (Math.random() - 0.5) * 3 - 1.5,
+      color: holiColors[Math.floor(Math.random() * holiColors.length)],
+      size: 20 + Math.random() * 25,
+      life: 1, decay: 0.012, gravity: 0.03,
+      type: 'puff', rot: 0, spin: 0
+    });
+  }
+}
+
+function drawGulal() {
+  requestAnimationFrame(drawGulal);
+  ctx.clearRect(0, 0, gc.width, gc.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x  += p.vx;  p.y  += p.vy;
+    p.vy += p.gravity; p.vx *= 0.97;
+    p.life -= p.decay; p.rot += p.spin;
+    if (p.life <= 0) { particles.splice(i, 1); continue; }
+    ctx.globalAlpha = p.life;
+    if (p.type === 'puff') {
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+      g.addColorStop(0, p.color + 'bb');
+      g.addColorStop(1, p.color + '00');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+    } else if (p.type === 'rect') {
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
+      ctx.restore();
+    } else {
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size/2, 0, Math.PI*2); ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+drawGulal();
+
+// Tap anywhere → gulal
+document.addEventListener('click', e => {
+  if (e.target.closest('.mbox') || e.target.closest('#admin') || e.target.closest('.float-btns')) return;
+  spawnGulal(e.clientX, e.clientY);
+});
+document.addEventListener('touchstart', e => {
+  if (e.target.closest('.mbox') || e.target.closest('#admin') || e.target.closest('.float-btns')) return;
+  const t = e.touches[0];
+  spawnGulal(t.clientX, t.clientY);
+}, { passive: true });
+
+// ── MODALS ──
+function openModal(id, e) { e && e.stopPropagation(); document.getElementById(id).classList.add('on'); }
+function closeModal(id)   { document.getElementById(id).classList.remove('on'); }
+document.querySelectorAll('.overlay').forEach(o =>
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('on'); })
+);
+
+// ── STORAGE ──
+const getR = () => { try { return JSON.parse(localStorage.getItem('holi_r')||'[]'); } catch { return []; } };
+const saveR = r  => { const a = getR(); a.push(r); localStorage.setItem('holi_r', JSON.stringify(a)); };
+
+// ── FORM ──
+function submitForm() {
+  const naam     = document.getElementById('f_naam').value;
+  const relation = document.getElementById('f_relation').value;
+  const mood     = document.getElementById('f_mood').value;
+  const msg      = document.getElementById('f_msg').value;
+  if (!naam||!relation||!mood||!msg) { shakeModal(); return; }
+  const obj = { naam, relation, mood, msg, time: new Date().toLocaleString('hi-IN') };
+  saveR(obj);
+  const txt = `🎨 AAYU KE HOLI FORM SE RESPONSE! 🎊\n\n👤 Naam: ${naam}\n💞 Relation: ${relation}\n😄 Mood: ${mood}\n💌 Message: ${msg}\n\n🕐 Time: ${obj.time}\n\n🌈 Happy Holi Aayu! 🎉`;
+  closeModal('form');
+  showToast();
+  setTimeout(() => window.open(`https://wa.me/${WA}?text=${encodeURIComponent(txt)}`, '_blank'), 700);
+}
+function shakeModal() {
+  const b = document.querySelector('#form .mbox');
+  ['-12px','12px','-8px','8px','0'].forEach((v,i) =>
+    setTimeout(() => b.style.transform = `translateX(${v})`, i*80)
+  );
+}
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3800);
+}
+
+// ── ADMIN ──
+function openAdmin() {
+  const r = getR();
+  document.getElementById('totN').textContent = r.length;
+  document.getElementById('todN').textContent = r.length;
+  const tb = document.getElementById('atbody');
+  tb.innerHTML = r.length
+    ? [...r].reverse().map((x,i) => `<tr>
+        <td style="color:#FFD600">${r.length-i}</td>
+        <td>${x.naam}</td><td>${x.relation||'-'}</td>
+        <td>${x.mood||'-'}</td><td>${x.msg}</td>
+        <td style="font-size:11px;opacity:.5">${x.time}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="6" class="nd">🎨 Koi response nahi abhi...</td></tr>';
+  document.getElementById('admin').classList.add('on');
+}
+function exportWA() {
+  const r = getR();
+  if (!r.length) { alert('Koi response nahi!'); return; }
+  let txt = `🎨 HOLI FORM — SAARI RESPONSES (${r.length})\n\n`;
+  r.forEach((x,i) => txt += `${i+1}. ${x.naam} | ${x.relation.slice(0,14)} | ${x.mood.slice(0,12)}\n`);
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(txt)}`, '_blank');
+}
+
+// Footer 5-click = admin
+let fc=0, ft;
+document.getElementById('footer').addEventListener('click', e => {
+  e.stopPropagation();
+  if (++fc >= 5) { fc=0; openAdmin(); }
+  clearTimeout(ft); ft = setTimeout(() => fc=0, 2500);
+});
+if (new URLSearchParams(location.search).get('admin') === SECRET) openAdmin();
+</script>
+</body>
+</html>
